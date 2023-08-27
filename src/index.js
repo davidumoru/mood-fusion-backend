@@ -8,6 +8,7 @@ const connectDB = require("./configs/database");
 
 connectDB(process.env.MONGO_URI);
 
+app.use(express.json());
 app.use('/auth', spotifyAuthRoutes);
 app.use('/create-playlist', createPlaylistRoute);
 
