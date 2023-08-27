@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+const User = require('../models/user.models');
+
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
@@ -38,6 +40,14 @@ router.get('/callback', async (req, res) => {
     },
   });
   const userData = userResponse.data;
+
+  // Store user data
+  const user = new User({
+    spotifyId: userData.id,
+    accessToken: accessToken,
+    refreshToken: tokenResponse.data.refresh_token,
+  });
+  await user.save();
 
   res.redirect('/');
 });
