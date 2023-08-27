@@ -9,6 +9,12 @@ connectDB(process.env.MONGO_URI);
 
 app.use('/auth', spotifyAuthRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "I am running",
+  });
+});
+
 const PORT = process.env.PORT || 5003;
 
 app.listen(PORT, () => {
