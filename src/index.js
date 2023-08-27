@@ -3,11 +3,13 @@ const express = require('express');
 const app = express();
 
 const spotifyAuthRoutes = require('./routes/auth.routes');
+const createPlaylistRoute = require('./routes/playlist.routes');
 const connectDB = require("./configs/database");
 
 connectDB(process.env.MONGO_URI);
 
 app.use('/auth', spotifyAuthRoutes);
+app.use('/create-playlist', createPlaylistRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({
