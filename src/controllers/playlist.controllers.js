@@ -8,11 +8,17 @@ const createMoodBasedPlaylist = async (req, res) => {
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res.status(400).json({ message: 'Failed to create playlist' });
+      res.status(400).json({ message: 'Failed to create playlist. Please check your inputs.' });
     }
   } catch (error) {
     console.error('Error creating mood-based playlist:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    if (error.message === 'Invalid access token') {
+      res.status(401).json({ message: 'Invalid access token. Please provide a valid access token.' });
+    } else if (error.message === 'Invalid user ID') {
+      res.status(400).json({ message: 'Invalid user ID. Please provide a valid user ID.' });
+    } else {
+      res.status(500).json({ message: 'Internal server error. Please try again later.' });
+    }
   }
 };
 
@@ -24,11 +30,17 @@ const createSongBasedPlaylist = async (req, res) => {
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res.status(400).json({ message: 'Failed to create song-based playlist' });
+      res.status(400).json({ message: 'Failed to create song-based playlist. Please check your inputs.' });
     }
   } catch (error) {
     console.error('Error creating song-based playlist:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    if (error.message === 'Invalid access token') {
+      res.status(401).json({ message: 'Invalid access token. Please provide a valid access token.' });
+    } else if (error.message === 'Invalid user ID') {
+      res.status(400).json({ message: 'Invalid user ID. Please provide a valid user ID.' });
+    } else {
+      res.status(500).json({ message: 'Internal server error. Please try again later.' });
+    }
   }
 };
 
@@ -36,21 +48,26 @@ const createArtistBasedPlaylist = async (req, res) => {
   const { accessToken, userId, artistId, includeRecommended } = req.body;
 
   try {
-    const playlistId = await artistPlaylistController.createArtistBasedPlaylist(
+    const playlistId = await playlistService.createArtistBasedPlaylist(
       accessToken,
       userId,
       artistId,
       includeRecommended
     );
-
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res.status(400).json({ message: 'Failed to create artist-based playlist' });
+      res.status(400).json({ message: 'Failed to create artist-based playlist. Please check your inputs.' });
     }
   } catch (error) {
     console.error('Error creating artist-based playlist:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    if (error.message === 'Invalid access token') {
+      res.status(401).json({ message: 'Invalid access token. Please provide a valid access token.' });
+    } else if (error.message === 'Invalid user ID') {
+      res.status(400).json({ message: 'Invalid user ID. Please provide a valid user ID.' });
+    } else {
+      res.status(500).json({ message: 'Internal server error. Please try again later.' });
+    }
   }
 };
 
