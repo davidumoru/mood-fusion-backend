@@ -24,7 +24,10 @@ async function refreshAccessToken(refreshToken) {
       throw new Error("Invalid token response");
     }
 
-    return tokenResponse.data.access_token;
+    return {
+      access_token: tokenResponse.data.access_token,
+      expires_in: tokenResponse.data.expires_in,
+    };
   } catch (error) {
     console.error("Failed to refresh access token:", error.message);
     return {
