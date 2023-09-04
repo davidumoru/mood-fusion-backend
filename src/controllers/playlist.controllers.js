@@ -17,10 +17,10 @@ const createMoodBasedPlaylist = async (req, res) => {
 };
 
 const createSongBasedPlaylist = async (req, res) => {
-  const { accessToken, inputSongId } = req.body;
+  const { accessToken, userId, inputSongId } = req.body;
 
   try {
-    const playlistId = await playlistService.createSongBasedPlaylist(accessToken, inputSongId);
+    const playlistId = await playlistService.createSongBasedPlaylist(accessToken, userId, inputSongId);
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
