@@ -74,7 +74,7 @@ const createMoodBasedPlaylist = async (accessToken, userId, mood) => {
   }
 };
 
-const createSongBasedPlaylist = async (accessToken, inputSongId) => {
+const createSongBasedPlaylist = async (accessToken, userId, inputSongId) => {
   try {
     // Get the audio features of the input song
     const audioFeaturesResponse = await axios.get(
@@ -122,7 +122,7 @@ const createSongBasedPlaylist = async (accessToken, inputSongId) => {
 
     // Create a playlist with the name of the input song and description
     const playlistResponse = await axios.post(
-      `https://api.spotify.com/v1/me/playlists`,
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
       {
         name: `Song-Based Playlist: ${inputSongId}`,
         description: `Playlist based on the song ${inputSongId} and its similar tracks`,
