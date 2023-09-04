@@ -175,7 +175,92 @@ const createSongBasedPlaylist = async (accessToken, userId, inputSongId) => {
   }
 };
 
+const createArtistBasedPlaylist = async (accessToken, userId, artistId, includeRecommended) => {
+  try {
+    // Get the top tracks of the artist
+    const topTracksResponse = await axios.get(
+      `https://api.spotify.com/v1/artists/${artistId}/top-tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Check if the response contains the expected data
+    if (!topTracksResponse.data || !topTracksResponse.data.tracks) {
+      throw new Error("Invalid top tracks response");
+    }
+
+    const topTracks = topTracksResponse.data.tracks.map((track) => track.uri);
+
+    // Create a playlist with the name of the artist and description
+    const playlistName = includeRecommended
+      ? `Artist-Based Playlist with Recommendations: ${artistId}`
+      : `Artist-Based Playlist: ${artistId}`;
+
+    const playlistDescription = includeRecommended
+      ? `Playlist based on the artist ${artistId}'s top tracks with additional recommendations`
+      : `Playlist based on the artist ${artistId}'s top tracks`;
+
+    const playlistResponse = await axios.post(
+      `https://api.spotify.com/v1/${userId}/playlists`,
+      {
+        name: playlistName,
+        description: playlistDescription,
+        public: false,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Check if the response contains the expected data
+    if (!playlistResponse.data || !playlistResponse.data.id) {
+      throw new Error("Invalid playlist response");
+    }
+
+    const playlistId = playlistResponse.data.id;
+
+    // Add the selected tracks to the playlist
+    const tracksToAdd = includeRecommended ? topTracks : [];
+
+    const addTracksResponse = await axios.post(
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      {
+        uris: tracksToAdd,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    // Check if the response contains the expected data
+    if (!addTracksResponse.data || !addTracksResponse.data.snapshot_id) {
+      throw new Error("Invalid add tracks response");
+    }
+
+    return playlistId;
+  } catch (error) {
+    console.error("Failed to create artist-based playlist:", error.message);
+    return {
+      success: false,
+      message: "Failed to create artist-based playlist",
+      error: error.message,
+    };
+  }
+};
+
+
 module.exports = {
   createMoodBasedPlaylist,
   createSongBasedPlaylist,
+  createArtistBasedPlaylist
 };
