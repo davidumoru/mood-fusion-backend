@@ -102,7 +102,9 @@ const createSongBasedPlaylist = async (accessToken, userId, inputSongId) => {
           seed_tracks: inputSongId,
           target_danceability: inputAudioFeatures.danceability,
           target_tempo: inputAudioFeatures.tempo,
-          // You can adjust other parameters based on your preference
+          max_energy: inputAudioFeatures.energy,
+          min_liveness: inputAudioFeatures.liveness,
+          min_acousticness: inputAudioFeatures.acousticness,
         },
         headers: {
           Authorization: `Bearer ${accessToken}`,
