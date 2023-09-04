@@ -3,6 +3,11 @@ const playlistService = require("../services/playlist.services");
 const createMoodBasedPlaylist = async (req, res) => {
   const { accessToken, userId, mood } = req.body;
 
+  // Input validation for required fields
+  if (!accessToken || !userId || !mood) {
+    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, and mood.' });
+  }
+
   try {
     const playlistId = await playlistService.createMoodBasedPlaylist(
       accessToken,
@@ -40,6 +45,11 @@ const createMoodBasedPlaylist = async (req, res) => {
 
 const createSongBasedPlaylist = async (req, res) => {
   const { accessToken, userId, inputSongId } = req.body;
+
+  // Input validation for required fields
+  if (!accessToken || !userId || !inputSongId) {
+    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, and song ID.' });
+  }
 
   try {
     const playlistId = await playlistService.createSongBasedPlaylist(
@@ -79,6 +89,11 @@ const createSongBasedPlaylist = async (req, res) => {
 
 const createArtistBasedPlaylist = async (req, res) => {
   const { accessToken, userId, artistId, includeRecommended } = req.body;
+
+  // Input validation for required fields
+  if (!accessToken || !userId || !artistId || !includeRecommended) {
+    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, artist ID and include recommended.' });
+  }
 
   try {
     const playlistId = await playlistService.createArtistBasedPlaylist(
