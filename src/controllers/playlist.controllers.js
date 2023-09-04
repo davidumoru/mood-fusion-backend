@@ -5,7 +5,12 @@ const createMoodBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !mood) {
-    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, and mood.' });
+    return res
+      .status(400)
+      .json({
+        message:
+          "Invalid input. Please provide access token, user ID, and mood.",
+      });
   }
 
   try {
@@ -17,20 +22,16 @@ const createMoodBasedPlaylist = async (req, res) => {
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res
-        .status(400)
-        .json({
-          message: "Failed to create playlist. Please check your inputs.",
-        });
+      res.status(400).json({
+        message: "Failed to create playlist. Please check your inputs.",
+      });
     }
   } catch (error) {
     console.error("Error creating mood-based playlist:", error);
     if (error.message === "Invalid access token") {
-      res
-        .status(401)
-        .json({
-          message: "Invalid access token. Please provide a valid access token.",
-        });
+      res.status(401).json({
+        message: "Invalid access token. Please provide a valid access token.",
+      });
     } else if (error.message === "Invalid user ID") {
       res
         .status(400)
@@ -48,7 +49,12 @@ const createSongBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !inputSongId) {
-    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, and song ID.' });
+    return res
+      .status(400)
+      .json({
+        message:
+          "Invalid input. Please provide access token, user ID, and song ID.",
+      });
   }
 
   try {
@@ -60,21 +66,17 @@ const createSongBasedPlaylist = async (req, res) => {
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res
-        .status(400)
-        .json({
-          message:
-            "Failed to create song-based playlist. Please check your inputs.",
-        });
+      res.status(400).json({
+        message:
+          "Failed to create song-based playlist. Please check your inputs.",
+      });
     }
   } catch (error) {
     console.error("Error creating song-based playlist:", error);
     if (error.message === "Invalid access token") {
-      res
-        .status(401)
-        .json({
-          message: "Invalid access token. Please provide a valid access token.",
-        });
+      res.status(401).json({
+        message: "Invalid access token. Please provide a valid access token.",
+      });
     } else if (error.message === "Invalid user ID") {
       res
         .status(400)
@@ -92,7 +94,12 @@ const createArtistBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !artistId || !includeRecommended) {
-    return res.status(400).json({ message: 'Invalid input. Please provide access token, user ID, artist ID and include recommended.' });
+    return res
+      .status(400)
+      .json({
+        message:
+          "Invalid input. Please provide access token, user ID, artist ID and include recommended.",
+      });
   }
 
   try {
@@ -105,21 +112,17 @@ const createArtistBasedPlaylist = async (req, res) => {
     if (playlistId) {
       res.status(201).json({ playlistId });
     } else {
-      res
-        .status(400)
-        .json({
-          message:
-            "Failed to create artist-based playlist. Please check your inputs.",
-        });
+      res.status(400).json({
+        message:
+          "Failed to create artist-based playlist. Please check your inputs.",
+      });
     }
   } catch (error) {
     console.error("Error creating artist-based playlist:", error);
     if (error.message === "Invalid access token") {
-      res
-        .status(401)
-        .json({
-          message: "Invalid access token. Please provide a valid access token.",
-        });
+      res.status(401).json({
+        message: "Invalid access token. Please provide a valid access token.",
+      });
     } else if (error.message === "Invalid user ID") {
       res
         .status(400)
