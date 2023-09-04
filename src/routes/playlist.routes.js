@@ -4,5 +4,6 @@ const playlistController = require('../controllers/playlist.controllers');
 
 router.post('/mood', playlistController.createMoodBasedPlaylist);
 router.post('/song', playlistController.createSongBasedPlaylist);
+router.post('/artist', playlistController.createArtistBasedPlaylist);
 
 module.exports = router;
