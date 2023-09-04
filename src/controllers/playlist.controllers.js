@@ -16,6 +16,22 @@ const createMoodBasedPlaylist = async (req, res) => {
   }
 };
 
+const createSongBasedPlaylist = async (req, res) => {
+  const { accessToken, inputSongId } = req.body;
+
+  try {
+    const playlistId = await playlistService.createSongBasedPlaylist(accessToken, inputSongId);
+    if (playlistId) {
+      res.status(201).json({ playlistId });
+    } else {
+      res.status(400).json({ message: 'Failed to create song-based playlist' });
+    }
+  } catch (error) {
+    console.error('Error creating song-based playlist:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
-  createMoodBasedPlaylist,
+  createMoodBasedPlaylist, createSongBasedPlaylist
 };
