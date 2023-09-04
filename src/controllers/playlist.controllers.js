@@ -32,6 +32,28 @@ const createSongBasedPlaylist = async (req, res) => {
   }
 };
 
+const createArtistBasedPlaylist = async (req, res) => {
+  const { accessToken, userId, artistId, includeRecommended } = req.body;
+
+  try {
+    const playlistId = await artistPlaylistController.createArtistBasedPlaylist(
+      accessToken,
+      userId,
+      artistId,
+      includeRecommended
+    );
+
+    if (playlistId) {
+      res.status(201).json({ playlistId });
+    } else {
+      res.status(400).json({ message: 'Failed to create artist-based playlist' });
+    }
+  } catch (error) {
+    console.error('Error creating artist-based playlist:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
-  createMoodBasedPlaylist, createSongBasedPlaylist
+  createMoodBasedPlaylist, createSongBasedPlaylist, createArtistBasedPlaylist
 };
