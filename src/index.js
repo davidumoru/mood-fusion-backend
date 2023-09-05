@@ -5,10 +5,13 @@ const app = express();
 const spotifyAuthRoutes = require('./routes/auth.routes');
 const createPlaylistRoute = require('./routes/playlist.routes');
 const connectDB = require("./configs/database");
+const checkTokens = require('./middlewares/auth.middlewares');
 
 connectDB(process.env.MONGO_URI);
 
 app.use(express.json());
+app.use(checkTokens);
+
 app.use('/auth', spotifyAuthRoutes);
 app.use('/create-playlist', createPlaylistRoute);
 
