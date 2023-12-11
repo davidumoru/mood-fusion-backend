@@ -5,12 +5,9 @@ const createMoodBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !mood) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Invalid input. Please provide access token, user ID, and mood.",
-      });
+    return res.status(400).json({
+      message: "Invalid input. Please provide access token, user ID, and mood.",
+    });
   }
 
   try {
@@ -49,12 +46,10 @@ const createSongBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !inputSongId) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Invalid input. Please provide access token, user ID, and song ID.",
-      });
+    return res.status(400).json({
+      message:
+        "Invalid input. Please provide access token, user ID, and song ID.",
+    });
   }
 
   try {
@@ -94,12 +89,10 @@ const createArtistBasedPlaylist = async (req, res) => {
 
   // Input validation for required fields
   if (!accessToken || !userId || !artistId || !includeRecommended) {
-    return res
-      .status(400)
-      .json({
-        message:
-          "Invalid input. Please provide access token, user ID, artist ID and include recommended.",
-      });
+    return res.status(400).json({
+      message:
+        "Invalid input. Please provide access token, user ID, artist ID and include recommended.",
+    });
   }
 
   try {

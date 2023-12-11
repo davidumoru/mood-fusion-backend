@@ -175,7 +175,12 @@ const createSongBasedPlaylist = async (accessToken, userId, inputSongId) => {
   }
 };
 
-const createArtistBasedPlaylist = async (accessToken, userId, artistId, includeRecommended) => {
+const createArtistBasedPlaylist = async (
+  accessToken,
+  userId,
+  artistId,
+  includeRecommended
+) => {
   try {
     // Get the top tracks of the artist
     const topTracksResponse = await axios.get(
@@ -258,9 +263,8 @@ const createArtistBasedPlaylist = async (accessToken, userId, artistId, includeR
   }
 };
 
-
 module.exports = {
   createMoodBasedPlaylist,
   createSongBasedPlaylist,
-  createArtistBasedPlaylist
+  createArtistBasedPlaylist,
 };

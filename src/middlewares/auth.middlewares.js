@@ -1,13 +1,13 @@
-const axios = require('axios');
-const refreshAccessToken = require('../services/auth.services');
-const User = require('../models/user.models');
+const axios = require("axios");
+const refreshAccessToken = require("../services/auth.services");
+const User = require("../models/user.models");
 
 async function checkTokens(req, res, next) {
   try {
     const user = await User.findOne({ spotifyId: req.user.spotifyId });
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: "User not found" });
     }
 
     const currentTime = Date.now() / 1000;
@@ -21,7 +21,9 @@ async function checkTokens(req, res, next) {
       const refreshResult = await refreshAccessToken(user.refreshToken);
 
       if (!refreshResult.success) {
-        return res.status(401).json({ message: 'Failed to refresh access token' });
+        return res
+          .status(401)
+          .json({ message: "Failed to refresh access token" });
       }
 
       // Update the user's access token in the database
@@ -33,8 +35,8 @@ async function checkTokens(req, res, next) {
       next();
     }
   } catch (error) {
-    console.error('Error checking tokens:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.error("Error checking tokens:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
 

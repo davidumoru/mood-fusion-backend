@@ -1,10 +1,10 @@
 require("dotenv").config();
-const express = require('express');
+const express = require("express");
 const app = express();
-const cors = require("cors")
+const cors = require("cors");
 
-const spotifyAuthRoutes = require('./routes/auth.routes');
-const createPlaylistRoute = require('./routes/playlist.routes');
+const spotifyAuthRoutes = require("./routes/auth.routes");
+const createPlaylistRoute = require("./routes/playlist.routes");
 const connectDB = require("./configs/database");
 
 app.use(cors());
@@ -12,9 +12,8 @@ connectDB(process.env.MONGO_URI);
 
 app.use(express.json());
 
-
-app.use('/auth', spotifyAuthRoutes);
-app.use('/create-playlist', createPlaylistRoute);
+app.use("/auth", spotifyAuthRoutes);
+app.use("/create-playlist", createPlaylistRoute);
 
 app.get("/", (req, res) => {
   res.status(200).json({
